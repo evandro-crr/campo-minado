@@ -20,14 +20,15 @@ public class Selecao {
 	public static void main(String[] arg) {
 		win.getContentPane().setLayout(null);
 		win.setSize(245, 130);
+		win.setResizable(false);
 
 		for (int i = 0; i < lbl.length; i++) {
 			lbl[i] = new JLabel();
 			txt[i] = new JTextField();
 			lbl[i].setSize(70, 25);
-			lbl[i].setLocation(i * 75+10, 10);
+			lbl[i].setLocation(i * 75 + 10, 10);
 			txt[i].setSize(70, 25);
-			txt[i].setLocation(i * 75+10, 25+10);
+			txt[i].setLocation(i * 75 + 10, 25 + 10);
 			win.getContentPane().add(txt[i]);
 			win.getContentPane().add(lbl[i]);
 
@@ -39,7 +40,7 @@ public class Selecao {
 
 		JButton confirma = new JButton("Comfirmar");
 		confirma.setSize(110, 25);
-		confirma.setLocation(10, 50+15);
+		confirma.setLocation(10, 50 + 15);
 		win.getContentPane().add(confirma);
 
 		win.setVisible(true);

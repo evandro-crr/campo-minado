@@ -32,7 +32,7 @@ public class Window {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				contador++;
-				lblbcont.setText("Time: "+contador / 60 + ":" + contador % 60);
+				lblbcont.setText("Time: " + contador / 60 + ":" + contador % 60);
 			}
 		});
 
@@ -40,6 +40,7 @@ public class Window {
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win.getContentPane().setLayout(null);
 		win.setTitle("Campo Minado");
+		win.setResizable(false);
 
 		lblmarc = new JLabel("Minas: 0/" + campo.getNminas());
 		lblmarc.setSize(200, 50);
@@ -91,7 +92,7 @@ public class Window {
 
 		}
 
-		lblmarc.setText("Minas:"+marcacoes + "/" + Window.campo.getNminas());
+		lblmarc.setText("Minas:" + marcacoes + "/" + Window.campo.getNminas());
 
 	}
 }
