@@ -1,35 +1,42 @@
-package campoMinadoG;
+package campoMinado;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
-public class Botao extends JButton implements MouseListener {
+class Botao extends JButton implements MouseListener {
 
 	int i, j;
 
-	public Botao(Mapa campo, int i, int j) {
+	Window win;
+
+	public Botao(Mapa campo, int i, int j, Window win) {
+		this.win = win;
 		this.i = i;
 		this.j = j;
+		setSize(50, 50);
+		setLocation(i * 50 + 10, j * 50 + 50);
+		setBackground(new Color(22, 57, 88));
 		this.addMouseListener(this);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		if (Window.acao == true) {
-			if (arg0.getButton() == MouseEvent.BUTTON1 && Window.campo.getCampo()[i][j] != 11) {
-				Jogada.jogar(Window.campo, i, j, false);
-				Window.atualizar(Window.campo.getCampo());
-			} else if (arg0.getButton() == MouseEvent.BUTTON3 && Window.campo.getCampo()[i][j] == 10
-					&& Window.marcacoes < Window.campo.getNminas()) {
-				Jogada.jogar(Window.campo, i, j, true);
-				Window.marcacoes++;
-				Window.atualizar(Window.campo.getCampo());
-			} else if (arg0.getButton() == MouseEvent.BUTTON3 && Window.campo.getCampo()[i][j] == 11) {
-				Window.campo.setValor(i, j, 10);
-				Window.marcacoes--;
-				Window.atualizar(Window.campo.getCampo());
+		if (win.isAcao() == true) {
+			if (arg0.getButton() == MouseEvent.BUTTON1 && win.getCampo().getCampo()[i][j] != 11) {
+				Jogada.jogar(i, j, false);
+				win.atualizar();
+			} else if (arg0.getButton() == MouseEvent.BUTTON3 && win.getCampo().getCampo()[i][j] == 10
+					&& win.getMarcacoes() < win.getCampo().getNminas()) {
+				Jogada.jogar(i, j, true);
+				win.setMarcacoes(1);
+				win.atualizar();
+			} else if (arg0.getButton() == MouseEvent.BUTTON3 && win.getCampo().getCampo()[i][j] == 11) {
+				win.getCampo().setValor(i, j, 10);
+				win.setMarcacoes(-1);
+				win.atualizar();
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package campoMinadoG;
+package campoMinado;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,15 +10,16 @@ import javax.swing.JTextField;
 
 public class Selecao {
 
-	private static int x, y, minas;
+	private int x, y, minas;
 
-	private static JLabel lbl[] = new JLabel[3];
-	private static JTextField txt[] = new JTextField[3];
+	private JLabel lbl[] = new JLabel[3];
+	private JTextField txt[] = new JTextField[3];
 
-	private static JFrame win = new JFrame("Seleção de nivel");
+	private JFrame win = new JFrame("Seleção de nivel");
 
-	public static void main(String[] arg) {
+	public Selecao() {
 		win.getContentPane().setLayout(null);
+		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win.setSize(245, 130);
 		win.setResizable(false);
 
@@ -44,7 +45,6 @@ public class Selecao {
 		win.getContentPane().add(confirma);
 
 		win.setVisible(true);
-
 		confirma.addActionListener(new ActionListener() {
 
 			@Override
@@ -52,23 +52,22 @@ public class Selecao {
 				y = Integer.parseInt(txt[0].getText());
 				x = Integer.parseInt(txt[1].getText());
 				minas = Integer.parseInt(txt[2].getText());
-				win.setVisible(false);
-				Window.criar(minas, x, y);
-				Window.mostar();
+				Window jogo = new Window(minas, x, y);
+				win.dispose();
 			}
 		});
 
 	}
 
-	public static int getX() {
+	public int getX() {
 		return x;
 	}
 
-	public static int getY() {
+	public int getY() {
 		return y;
 	}
 
-	public static int getMinas() {
+	public int getMinas() {
 		return minas;
 	}
 

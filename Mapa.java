@@ -1,11 +1,11 @@
-package campoMinadoG;
+package campoMinado;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class Mapa {
 
-	Random ran = new Random();
+	private Random ran = new Random();
 
 	private int[][] campo;
 	private int[][] campor;
@@ -52,7 +52,7 @@ public class Mapa {
 
 	}
 
-	int verificarMina(int[][] parte) {
+	private int verificarMina(int[][] parte) {
 		int referencia = 0;
 
 		if (parte[1][1] == 1)
