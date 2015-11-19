@@ -1,43 +1,38 @@
-package campoMinado;
-
 import javax.swing.JOptionPane;
 
 public class Jogada {
 
-	private static Window win;
+	private static JanelaCampoMinado window;
 
-	public static Window getWin() {
-		return win;
+	public static void setWin(JanelaCampoMinado win) {
+		Jogada.window = win;
 	}
 
-	public static void setWin(Window win) {
-		Jogada.win = win;
-	}
-
+	// Faz a ligca de quando clicado em um ponto
 	public static void jogar(int i, int j, boolean movimento) {
 
 		if (movimento) {
-			win.getCampo().setValor(i, j, 11);
+			window.getCampo().setValor(i, j, 11);
 
 		} else {
-			if (win.getCampo().getCampor()[i][j] == 9) {
-				win.setAcao(false);
-				win.pararTimer();
-				JOptionPane.showMessageDialog(null, "Voçe perdeu");
-				win.getCampo().setCampo(win.getCampo().getCampor());
+			if (window.getCampo().getCampoReferencia()[i][j] == 9) {
+				window.setAcao(false);
+				window.pararTimer();
+				JOptionPane.showMessageDialog(null, "Você perdeu");
+				window.getCampo().setCampoJogador(window.getCampo().getCampoReferencia());
 
-			} else if (win.getCampo().getCampor()[i][j] == 0) {
+			} else if (window.getCampo().getCampoReferencia()[i][j] == 0) {
 
 				verificarCamapoLivre(i, j);
 
-				for (int k = 0; k < win.getCampo().getCampo().length; k++) {
-					for (int l = 0; l < win.getCampo().getCampo()[k].length; l++) {
-						if (win.getCampo().getCampo()[k][l] == 0) {
+				for (int k = 0; k < window.getCampo().getCampoJogador().length; k++) {
+					for (int l = 0; l < window.getCampo().getCampoJogador()[k].length; l++) {
+						if (window.getCampo().getCampoJogador()[k][l] == 0) {
 							for (int i2 = 0; i2 < 3; i2++) {
 								for (int j2 = 0; j2 < 3; j2++) {
-									if (Mapa.verificaValidade(win.getCampo().getCampo(), k + i2 - 1, l + j2 - 1))
-										win.getCampo().setValor(k + i2 - 1, l + j2 - 1,
-												win.getCampo().getCampor()[k + i2 - 1][l + j2 - 1]);
+									if (Mapa.isValido(window.getCampo().getCampoJogador(), k + i2 - 1, l + j2 - 1))
+										window.getCampo().setValor(k + i2 - 1, l + j2 - 1,
+												window.getCampo().getCampoReferencia()[k + i2 - 1][l + j2 - 1]);
 								}
 
 							}
@@ -46,8 +41,8 @@ public class Jogada {
 				}
 				verificarVitoria();
 
-			} else if (win.getCampo().getCampo()[i][j] == 10) {
-				win.getCampo().setValor(i, j, win.getCampo().getCampor()[i][j]);
+			} else if (window.getCampo().getCampoJogador()[i][j] == 10) {
+				window.getCampo().setValor(i, j, window.getCampo().getCampoReferencia()[i][j]);
 				verificarVitoria();
 			} else {
 				abrir(i, j);
@@ -58,9 +53,10 @@ public class Jogada {
 
 	}
 
+	// Abri campo ao redor quando marcado todas as minas
 	private static void abrir(int i, int j) {
-		int parte[][] = Mapa.criarParte(win.getCampo().getCampo(), i, j);
-		int parter[][] = Mapa.criarParte(win.getCampo().getCampor(), i, j);
+		int parte[][] = Mapa.criaParte(window.getCampo().getCampoJogador(), i, j);
+		int parter[][] = Mapa.criaParte(window.getCampo().getCampoReferencia(), i, j);
 		int referencia = 0;
 
 		for (int k = 0; k < parte.length; k++) {
@@ -74,13 +70,14 @@ public class Jogada {
 			for (int k = 0; k < parter.length; k++) {
 				for (int k2 = 0; k2 < parter.length; k2++) {
 					if (parte[k][k2] == 10) {
-						win.getCampo().setValor(i + k - 1, j + k2 - 1, parter[k][k2]);
+						window.getCampo().setValor(i + k - 1, j + k2 - 1, parter[k][k2]);
 					}
 				}
 			}
 		}
 	}
 
+	// Mostra o campo no terminal
 	static void mostrar(int[][] matriz) {
 		String referencia = "   ";
 		for (int i = 0; i < matriz[0].length; i++)
@@ -119,14 +116,16 @@ public class Jogada {
 
 	}
 
+	// Abri o campo quando aclidado em um ponto com 0 minas
 	private static void verificarCamapoLivre(int x, int y) {
-		int[][] parte = Mapa.criarParte(win.getCampo().getCampo(), x, y);
-		int[][] parteMapa = Mapa.criarParte(win.getCampo().getCampor(), x, y);
+		int[][] parte = Mapa.criaParte(window.getCampo().getCampoJogador(), x, y);
+		int[][] parteMapa = Mapa.criaParte(window.getCampo().getCampoReferencia(), x, y);
 
 		for (int i = 0; i < parte.length; i++) {
 			for (int j = 0; j < parte.length; j++) {
 				if (parteMapa[i][j] == 0 && parte[i][j] == 10) {
-					win.getCampo().setValor(x + i - 1, y + j - 1, win.getCampo().getCampor()[x + i - 1][y + j - 1]);
+					window.getCampo().setValor(x + i - 1, y + j - 1,
+							window.getCampo().getCampoReferencia()[x + i - 1][y + j - 1]);
 					verificarCamapoLivre(x + i - 1, y + j - 1);
 				}
 			}
@@ -138,30 +137,32 @@ public class Jogada {
 		int referencia = 0;
 		int area = 0;
 
-		for (int i = 0; i < win.getCampo().getCampor().length; i++) {
-			for (int j = 0; j < win.getCampo().getCampor()[i].length; j++) {
-				if (win.getCampo().getCampo()[i][j] == 11 && win.getCampo().getCampor()[i][j] == 9)
+		for (int i = 0; i < window.getCampo().getCampoReferencia().length; i++) {
+			for (int j = 0; j < window.getCampo().getCampoReferencia()[i].length; j++) {
+				if (window.getCampo().getCampoJogador()[i][j] == 11
+						&& window.getCampo().getCampoReferencia()[i][j] == 9)
 					referencia++;
-				if (win.getCampo().getCampo()[i][j] != 10 && win.getCampo().getCampor()[i][j] != 9)
+				if (window.getCampo().getCampoJogador()[i][j] != 10
+						&& window.getCampo().getCampoReferencia()[i][j] != 9)
 					area++;
 			}
 		}
 
-		if (referencia == win.getCampo().getNminas()
-				|| (win.getCampo().getCampo().length * win.getCampo().getCampo()[0].length
-						- win.getCampo().getNminas() == area)) {
+		if (referencia == window.getCampo().getNMinas()
+				|| (window.getCampo().getCampoJogador().length * window.getCampo().getCampoJogador()[0].length
+						- window.getCampo().getNMinas() == area)) {
 
-			if (referencia == win.getCampo().getNminas())
+			if (referencia == window.getCampo().getNMinas())
 				System.out.println("referencia");
-			if ((win.getCampo().getCampo().length * win.getCampo().getCampo()[0].length
-					- win.getCampo().getNminas() == area))
+			if ((window.getCampo().getCampoJogador().length * window.getCampo().getCampoJogador()[0].length
+					- window.getCampo().getNMinas() == area))
 				System.out.println("area");
 
-			win.getCampo().setCampo(win.getCampo().getCampor());
-			win.setAcao(false);
-			win.pararTimer();
+			window.getCampo().setCampoJogador(window.getCampo().getCampoReferencia());
+			window.setAcao(false);
+			window.pararTimer();
 			JOptionPane.showMessageDialog(null,
-					"Voce ganhou      Time: " + win.getContador() / 60 + ":" + win.getContador() % 60);
+					"Voce ganhou      Time: " + window.getContador() / 60 + ":" + window.getContador() % 60);
 		}
 	}
 

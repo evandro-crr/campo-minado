@@ -1,5 +1,3 @@
-package campoMinado;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,30 +6,29 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class Selecao {
+public class Selecao extends JFrame {
 
 	private int x, y, minas;
 
 	private JLabel lbl[] = new JLabel[3];
 	private JTextField txt[] = new JTextField[3];
 
-	private JFrame win = new JFrame("Seleção de nivel");
-
 	public Selecao() {
-		win.getContentPane().setLayout(null);
-		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		win.setSize(245, 130);
-		win.setResizable(false);
+		getContentPane().setLayout(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(245, 215);
+		setResizable(false);
+		setTitle("Seleção de Nivel");
 
 		for (int i = 0; i < lbl.length; i++) {
 			lbl[i] = new JLabel();
 			txt[i] = new JTextField();
 			lbl[i].setSize(70, 25);
-			lbl[i].setLocation(i * 75 + 10, 10);
+			lbl[i].setLocation(i * 75 + 10, 10 + 90);
 			txt[i].setSize(70, 25);
-			txt[i].setLocation(i * 75 + 10, 25 + 10);
-			win.getContentPane().add(txt[i]);
-			win.getContentPane().add(lbl[i]);
+			txt[i].setLocation(i * 75 + 10, 25 + 10 + 90);
+			getContentPane().add(txt[i]);
+			getContentPane().add(lbl[i]);
 
 		}
 
@@ -39,12 +36,11 @@ public class Selecao {
 		lbl[1].setText("Largura");
 		lbl[2].setText("Minas");
 
-		JButton confirma = new JButton("Comfirmar");
-		confirma.setSize(110, 25);
-		confirma.setLocation(10, 50 + 15);
-		win.getContentPane().add(confirma);
+		JButton confirma = new JButton("Personalizado");
+		confirma.setSize(150, 25);
+		confirma.setLocation(10, 50 + 15 + 90);
+		getContentPane().add(confirma);
 
-		win.setVisible(true);
 		confirma.addActionListener(new ActionListener() {
 
 			@Override
@@ -52,23 +48,52 @@ public class Selecao {
 				y = Integer.parseInt(txt[0].getText());
 				x = Integer.parseInt(txt[1].getText());
 				minas = Integer.parseInt(txt[2].getText());
-				Window jogo = new Window(minas, x, y);
-				win.dispose();
+				JanelaCampoMinado jogo = new JanelaCampoMinado(minas, x, y);
+				dispose();
 			}
 		});
 
-	}
+		JButton iniciante = new JButton("Iniciante");
+		iniciante.setSize(150, 25);
+		iniciante.setLocation(getSize().width / 2 - 75, 5);
+		iniciante.addActionListener(new ActionListener() {
 
-	public int getX() {
-		return x;
-	}
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JanelaCampoMinado jogo = new JanelaCampoMinado(10, 10, 10);
+				dispose();
+			}
+		});
+		getContentPane().add(iniciante);
 
-	public int getY() {
-		return y;
-	}
+		JButton intermediario = new JButton("Intermediario");
+		intermediario.setSize(150, 25);
+		intermediario.setLocation(getSize().width / 2 - 75, 35);
+		intermediario.addActionListener(new ActionListener() {
 
-	public int getMinas() {
-		return minas;
-	}
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JanelaCampoMinado jogo = new JanelaCampoMinado(40, 16, 16);
+				dispose();
+			}
+		});
 
+		getContentPane().add(intermediario);
+
+		JButton experiente = new JButton("Experiente");
+		experiente.setSize(150, 25);
+		experiente.setLocation(getSize().width / 2 - 75, 40 + 25);
+		experiente.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JanelaCampoMinado jogo = new JanelaCampoMinado(60, 18, 18);
+				dispose();
+			}
+		});
+		getContentPane().add(experiente);
+
+		setVisible(true);
+
+	}
 }

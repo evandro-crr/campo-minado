@@ -1,64 +1,72 @@
-package campoMinado;
-
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
+
+/*
+ * codigos: 0-8 quantidade de minas em volta
+ * 			9 é uma mina
+ * 			10 posição não explorada
+ * 			11 posição marcada como mina
+ */
 
 class Botao extends JButton implements MouseListener {
-
+	private static final long serialVersionUID = 1L;
 	int i, j;
+	// EstadoBotao estado =
+	final int largura = 50;
+	JanelaCampoMinado window;
 
-	Window win;
-
-	public Botao(Mapa campo, int i, int j, Window win) {
-		this.win = win;
+	public Botao(Mapa campo, int i, int j, JanelaCampoMinado window) {
+		this.window = window;
 		this.i = i;
 		this.j = j;
-		setSize(50, 50);
-		setLocation(i * 50 + 10, j * 50 + 50);
+		setSize(largura, largura);
+		setLocation(i * largura + 10, j * largura + largura);
 		setBackground(new Color(22, 57, 88));
 		this.addMouseListener(this);
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		if (win.isAcao() == true) {
-			if (arg0.getButton() == MouseEvent.BUTTON1 && win.getCampo().getCampo()[i][j] != 11) {
+	public void mouseClicked(MouseEvent e) {
+		if (window.isAcao() == true) {
+			// Ativa ponto no campo do jogador
+			if (e.getButton() == MouseEvent.BUTTON1 && window.getCampo().getCampoJogador()[i][j] != 11) {
 				Jogada.jogar(i, j, false);
-				win.atualizar();
-			} else if (arg0.getButton() == MouseEvent.BUTTON3 && win.getCampo().getCampo()[i][j] == 10
-					&& win.getMarcacoes() < win.getCampo().getNminas()) {
+				window.atualiza();
+			}
+			// Marca posival mina
+			else if (e.getButton() == MouseEvent.BUTTON3 && window.getCampo().getCampoJogador()[i][j] == 10
+					&& window.getMarcacoes() < window.getCampo().getNMinas()) {
 				Jogada.jogar(i, j, true);
-				win.setMarcacoes(1);
-				win.atualizar();
-			} else if (arg0.getButton() == MouseEvent.BUTTON3 && win.getCampo().getCampo()[i][j] == 11) {
-				win.getCampo().setValor(i, j, 10);
-				win.setMarcacoes(-1);
-				win.atualizar();
+				window.setMarcacoes(1);
+				window.atualiza();
+			}
+			// Desmarca povivel mina
+			else if (e.getButton() == MouseEvent.BUTTON3 && window.getCampo().getCampoJogador()[i][j] == 11) {
+
+				window.getCampo().setValor(i, j, 10);
+				window.setMarcacoes(-1);
+				window.atualiza();
 			}
 		}
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
-
+	public void mouseEntered(MouseEvent e) {
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-
+	public void mouseExited(MouseEvent e) {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-
+	public void mousePressed(MouseEvent e) {
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-
+	public void mouseReleased(MouseEvent e) {
 	}
-
 }
