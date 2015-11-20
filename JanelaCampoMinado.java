@@ -1,3 +1,4 @@
+package campoMinado;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,20 +13,22 @@ import javax.swing.JMenuItem;
 public class JanelaCampoMinado extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private Botao[][] btn;
+	
+	private Celula[][] btn;
 	private JLabel lblMarcacoes, lblTimer;
 	private JMenuBar menuBar;
 	private JMenu jogo;
 	private JMenuItem novoJogo;
+	
 	private Timer timer;
-	private int contador; // Contador para o timer
-	private boolean acao = true; // bloqueia os botoes quando o jogo termina
 	private Mapa campo;
-	private int marcacoes; // Controla quantos pontos podem ser marcado como posivel mina
+	private int contador; // Contador para o timer
+	private boolean jogoAcontecendo = true; // bloqueia os botoes quando o jogo termina
+	private int nMarcacoes; // Controla quantos pontos podem ser marcado como posivel mina
 
 	public JanelaCampoMinado(int nMinas, int x, int y) {
 		this.campo = new Mapa(nMinas, x, y);
-		btn = new Botao[campo.getCampoJogador().length][campo.getCampoJogador()[0].length];
+		btn = new Celula[campo.getCampoJogador().length][campo.getCampoJogador()[0].length];
 
 		setSize((campo.getCampoJogador().length) * 50 + 25, (campo.getCampoJogador()[0].length) * 50 + 110);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,7 +50,7 @@ public class JanelaCampoMinado extends JFrame {
 
 		for (int i = 0; i < btn.length; i++) {
 			for (int j = 0; j < btn[0].length; j++) {
-				btn[i][j] = new Botao(campo, i, j, this);
+				btn[i][j] = new Celula(i, j, this);
 				getContentPane().add(btn[i][j]);
 			}
 		}
@@ -105,19 +108,19 @@ public class JanelaCampoMinado extends JFrame {
 
 		}
 
-		lblMarcacoes.setText("Minas:" + marcacoes + "/" + campo.getNMinas());
+		lblMarcacoes.setText("Minas:" + nMarcacoes + "/" + campo.getNMinas());
 	}
 
 	public int getContador() {
 		return contador;
 	}
 
-	public boolean isAcao() {
-		return acao;
+	public boolean isJogoAcontecendo() {
+		return jogoAcontecendo;
 	}
 
 	public void setAcao(boolean acao) {
-		this.acao = acao;
+		this.jogoAcontecendo = acao;
 	}
 
 	public Mapa getCampo() {
@@ -129,11 +132,11 @@ public class JanelaCampoMinado extends JFrame {
 	}
 
 	public int getMarcacoes() {
-		return marcacoes;
+		return nMarcacoes;
 	}
 
 	public void setMarcacoes(int marcacoes) {
-		this.marcacoes += marcacoes;
+		this.nMarcacoes += marcacoes;
 	}
 
 	public void pararTimer() {

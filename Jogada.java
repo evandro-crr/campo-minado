@@ -1,3 +1,4 @@
+package campoMinado;
 import javax.swing.JOptionPane;
 
 public class Jogada {
@@ -8,7 +9,7 @@ public class Jogada {
 		Jogada.window = win;
 	}
 
-	// Faz a ligca de quando clicado em um ponto
+	// Faz a logica de quando clicado em um ponto
 	public static void jogar(int i, int j, boolean movimento) {
 
 		if (movimento) {
@@ -23,7 +24,7 @@ public class Jogada {
 
 			} else if (window.getCampo().getCampoReferencia()[i][j] == 0) {
 
-				verificarCamapoLivre(i, j);
+				verificaCampoLivre(i, j);
 
 				for (int k = 0; k < window.getCampo().getCampoJogador().length; k++) {
 					for (int l = 0; l < window.getCampo().getCampoJogador()[k].length; l++) {
@@ -39,21 +40,21 @@ public class Jogada {
 						}
 					}
 				}
-				verificarVitoria();
+				verificaVitoria();
 
 			} else if (window.getCampo().getCampoJogador()[i][j] == 10) {
 				window.getCampo().setValor(i, j, window.getCampo().getCampoReferencia()[i][j]);
-				verificarVitoria();
+				verificaVitoria();
 			} else {
 				abrir(i, j);
-				verificarVitoria();
+				verificaVitoria();
 
 			}
 		}
 
 	}
 
-	// Abri campo ao redor quando marcado todas as minas
+	// Abre campo ao redor quando marcado todas as minas
 	private static void abrir(int i, int j) {
 		int parte[][] = Mapa.criaParte(window.getCampo().getCampoJogador(), i, j);
 		int parter[][] = Mapa.criaParte(window.getCampo().getCampoReferencia(), i, j);
@@ -116,8 +117,8 @@ public class Jogada {
 
 	}
 
-	// Abri o campo quando aclidado em um ponto com 0 minas
-	private static void verificarCamapoLivre(int x, int y) {
+	// Abre o campo quando clidado em um ponto com 0 minas
+	private static void verificaCampoLivre(int x, int y) {
 		int[][] parte = Mapa.criaParte(window.getCampo().getCampoJogador(), x, y);
 		int[][] parteMapa = Mapa.criaParte(window.getCampo().getCampoReferencia(), x, y);
 
@@ -126,14 +127,14 @@ public class Jogada {
 				if (parteMapa[i][j] == 0 && parte[i][j] == 10) {
 					window.getCampo().setValor(x + i - 1, y + j - 1,
 							window.getCampo().getCampoReferencia()[x + i - 1][y + j - 1]);
-					verificarCamapoLivre(x + i - 1, y + j - 1);
+					verificaCampoLivre(x + i - 1, y + j - 1);
 				}
 			}
 		}
 
 	}
 
-	private static void verificarVitoria() {
+	private static void verificaVitoria() {
 		int referencia = 0;
 		int area = 0;
 

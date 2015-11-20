@@ -1,3 +1,4 @@
+package campoMinado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class Selecao extends JFrame {
+	private static final long serialVersionUID = 1L;
 
 	private int x, y, minas;
 
@@ -44,11 +46,11 @@ public class Selecao extends JFrame {
 		confirma.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				y = Integer.parseInt(txt[0].getText());
 				x = Integer.parseInt(txt[1].getText());
 				minas = Integer.parseInt(txt[2].getText());
-				JanelaCampoMinado jogo = new JanelaCampoMinado(minas, x, y);
+				new JanelaCampoMinado(minas, x, y);
 				dispose();
 			}
 		});
@@ -59,8 +61,8 @@ public class Selecao extends JFrame {
 		iniciante.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JanelaCampoMinado jogo = new JanelaCampoMinado(10, 10, 10);
+			public void actionPerformed(ActionEvent e) {
+				new JanelaCampoMinado(10, 10, 10);
 				dispose();
 			}
 		});
@@ -72,8 +74,8 @@ public class Selecao extends JFrame {
 		intermediario.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JanelaCampoMinado jogo = new JanelaCampoMinado(40, 16, 16);
+			public void actionPerformed(ActionEvent e) {
+				new JanelaCampoMinado(40, 16, 16);
 				dispose();
 			}
 		});
@@ -86,8 +88,8 @@ public class Selecao extends JFrame {
 		experiente.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JanelaCampoMinado jogo = new JanelaCampoMinado(60, 18, 18);
+			public void actionPerformed(ActionEvent e) {
+				new JanelaCampoMinado(60, 18, 18);
 				dispose();
 			}
 		});

@@ -1,3 +1,4 @@
+package campoMinado;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -52,8 +53,8 @@ public class Mapa {
 
 	}
 
-	// Verifica a quantidade de minas na região 
-	// retorna o numero de minas, ou 9 se a posição verificada for uma mina
+	// Verifica a quantidade de minas na regiÃ£o 
+	// retorna o numero de minas, ou 9 se a posiÃ§Ã£o verificada for uma mina
 	private int verificaMina(int[][] parte) {
 		int referencia = 0;
 
@@ -71,8 +72,8 @@ public class Mapa {
 		return referencia;
 	}
 
-	// a partir de uma posição em um campo cria
-	// uma matriz 3x3 com os valores em torno da posição dada
+	// a partir de uma posiÃ§Ã£o em um campo cria
+	// uma matriz 3x3 com os valores em torno da posiÃ§Ã£o dada
 	static int[][] criaParte(int[][] campo, int i, int j) {
 
 		int[][] parte = new int[3][3];
@@ -88,7 +89,7 @@ public class Mapa {
 		return parte;
 	}
 
-	// Verifica se o ponto dado não é nulo na matriz 
+	// Verifica se o ponto dado nÃ£o Ã© nulo na matriz 
 	static boolean isValido(int[][] campo, int i, int j) {
 		return i >= 0 && i < campo.length && j >= 0 && j < campo[i].length;
 	}
