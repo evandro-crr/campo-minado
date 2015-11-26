@@ -34,13 +34,13 @@ class Botao extends JButton implements MouseListener {
 		if (window.isAcao() == true) {
 			// Ativa ponto no campo do jogador
 			if (e.getButton() == MouseEvent.BUTTON1 && window.getCampo().getCampoJogador()[i][j] != 11) {
-				Jogada.jogar(i, j, false);
+				new Abrir(i, j, window);
 				window.atualiza();
 			}
 			// Marca posival mina
 			else if (e.getButton() == MouseEvent.BUTTON3 && window.getCampo().getCampoJogador()[i][j] == 10
 					&& window.getMarcacoes() < window.getCampo().getNMinas()) {
-				Jogada.jogar(i, j, true);
+				new Marcar(i, j, window.getCampo());
 				window.setMarcacoes(1);
 				window.atualiza();
 			}

@@ -21,7 +21,8 @@ public class JanelaCampoMinado extends JFrame {
 	private int contador; // Contador para o timer
 	private boolean acao = true; // bloqueia os botoes quando o jogo termina
 	private Mapa campo;
-	private int marcacoes; // Controla quantos pontos podem ser marcado como posivel mina
+	private int marcacoes; // Controla quantos pontos podem ser marcado como
+							// posivel mina
 
 	public JanelaCampoMinado(int nMinas, int x, int y) {
 		this.campo = new Mapa(nMinas, x, y);
@@ -52,8 +53,6 @@ public class JanelaCampoMinado extends JFrame {
 			}
 		}
 
-		Jogada.setWin(this);
-
 		jogo = new JMenu("Jogo");
 		menuBar = new JMenuBar();
 		novoJogo = new JMenuItem("Novo Jogo");
@@ -65,7 +64,7 @@ public class JanelaCampoMinado extends JFrame {
 			}
 		});
 		jogo.add(novoJogo);
-		
+
 		menuBar.add(jogo);
 		setJMenuBar(menuBar);
 
