@@ -6,18 +6,19 @@ public class Abrir implements Jogadas {
 
 	public Abrir(int i, int j, JanelaCampoMinado window) {
 		this.window = window;
-		jogar(i, j, window.getCampo());
+		jogar(i, j, window);
 	}
 
 	// Faz a ligca de quando clicado em um ponto
 	@Override
-	public void jogar(int i, int j, Mapa mapa) {
+	public void jogar(int i, int j, JanelaCampoMinado window) {
 
 		if (window.getCampo().getCampoReferencia()[i][j] == 9) {
 			window.setAcao(false);
 			window.pararTimer();
 			JOptionPane.showMessageDialog(null, "Você perdeu");
 			window.getCampo().setCampoJogador(window.getCampo().getCampoReferencia());
+			return;
 
 		} else if (window.getCampo().getCampoReferencia()[i][j] == 0) {
 
@@ -37,40 +38,13 @@ public class Abrir implements Jogadas {
 					}
 				}
 			}
-			verificarVitoria();
 
 		} else if (window.getCampo().getCampoJogador()[i][j] == 10) {
 			window.getCampo().setValor(i, j, window.getCampo().getCampoReferencia()[i][j]);
-			verificarVitoria();
-		} else {
-			abrir(i, j);
-			verificarVitoria();
-
+		} else{
+			new Aberto(i,j, window);
 		}
-	}
-
-	// Abri campo ao redor quando marcado todas as minas
-	private void abrir(int i, int j) {
-		int parte[][] = Mapa.criaParte(window.getCampo().getCampoJogador(), i, j);
-		int parter[][] = Mapa.criaParte(window.getCampo().getCampoReferencia(), i, j);
-		int referencia = 0;
-
-		for (int k = 0; k < parte.length; k++) {
-			for (int k2 = 0; k2 < parte.length; k2++) {
-				if (parte[k][k2] == 11 && parter[k][k2] == 9)
-					referencia++;
-			}
-		}
-
-		if (referencia == parte[1][1]) {
-			for (int k = 0; k < parter.length; k++) {
-				for (int k2 = 0; k2 < parter.length; k2++) {
-					if (parte[k][k2] == 10) {
-						window.getCampo().setValor(i + k - 1, j + k2 - 1, parter[k][k2]);
-					}
-				}
-			}
-		}
+		verificarVitoria();
 	}
 
 	// Abri o campo quando aclidado em um ponto com 0 minas

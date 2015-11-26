@@ -40,7 +40,7 @@ class Botao extends JButton implements MouseListener {
 			// Marca posival mina
 			else if (e.getButton() == MouseEvent.BUTTON3 && window.getCampo().getCampoJogador()[i][j] == 10
 					&& window.getMarcacoes() < window.getCampo().getNMinas()) {
-				new Marcar(i, j, window.getCampo());
+				new Marcar(i, j, window);
 				window.setMarcacoes(1);
 				window.atualiza();
 			}
